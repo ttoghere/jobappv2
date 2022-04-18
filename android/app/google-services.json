@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "632583053750",
+    "project_id": "jobtodo-48aff",
+    "storage_bucket": "jobtodo-48aff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632583053750:android:f8c4145aa05a4c85446117",
+        "android_client_info": {
+          "package_name": "com.example.jobappv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632583053750-41sqd0auf28jb5tvmp1nl87pkvqc53lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGOO4r8IiW_hldHg4H3YPLZ1rZhuSZsBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632583053750-41sqd0auf28jb5tvmp1nl87pkvqc53lm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "632583053750-9bfaladbul1np6i1vkco98ljhpknfnrp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jobapplication"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
