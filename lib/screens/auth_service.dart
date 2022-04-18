@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -23,5 +25,41 @@ class AuthServiceClass {
       await storage.delete(key: "token");
       Navigator.of(context).pushNamed(SignUp.routeName);
     } catch (e) {}
+  }
+
+  Future<void> verifyPhoneNumber(
+      String phoneNumber, BuildContext context, Function setData) async {
+    PhoneVerificationCompleted verificationCompleted =
+        (PhoneAuthCredential) async {
+      showSnackbar(context, "Verification Completed");
+    };
+    PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException exception) {
+      showSnackbar(context, "Verification Failed: $exception");
+    };
+    PhoneCodeSent codeSent = (String verificationId, [int? forceResendingToken]) {
+      showSnackbar(context, "Verification code sent to your number");
+      setData(verificationId);
+    };
+    PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
+        (String verificationID) {
+      showSnackbar(context, "Time Out");
+    };
+    try {
+      await auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: verificationCompleted,
+        verificationFailed: verificationFailed,
+        codeSent: codeSent,
+        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+      );
+    } catch (e) {
+      showSnackbar(context, "Failed: $e");
+    }
+  }
+
+  void showSnackbar(BuildContext context, String text) {
+    final snackbar = SnackBar(content: Text(text));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 }

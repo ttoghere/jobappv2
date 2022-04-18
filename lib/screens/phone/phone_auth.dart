@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:jobappv2/screens/auth_service.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 
@@ -16,6 +17,10 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   int start = 30;
   bool wait = false;
   String buttonName = "Send";
+  TextEditingController phoneTextControl = TextEditingController();
+  AuthServiceClass auth = AuthServiceClass();
+  String verificationId = "";
+  String smsCode = "";
   void startTimer() {
     const onsec = Duration(seconds: 1);
     Timer timer = Timer.periodic(onsec, (timer) {
@@ -30,6 +35,13 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
         });
       }
     });
+  }
+
+  void setData(verificationId) {
+    setState(() {
+      verificationId = verificationId;
+    });
+    startTimer();
   }
 
   @override
@@ -159,6 +171,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextFormField(
+        controller: phoneTextControl,
         style: TextStyle(
           color: Colors.white,
         ),
@@ -180,12 +193,14 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
           suffixIcon: GestureDetector(
             onTap: wait
                 ? null
-                : () {
+                : () async {
                     startTimer();
                     setState(() {
                       wait = true;
                       buttonName = "Reset";
                     });
+                    await auth.verifyPhoneNumber(
+                        "+91 ${phoneTextControl.text}", context,setData);
                   },
             child: Padding(
               padding:
