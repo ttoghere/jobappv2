@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:jobappv2/screens/auth_service.dart';
+import 'package:jobappv2/auth_service.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 
@@ -103,7 +103,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
               SizedBox(
                 height: 30,
               ),
-              OtpField(),
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: otpField(context)),
               SizedBox(
                 height: 30,
               ),
@@ -162,6 +164,30 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
     );
   }
 
+  OTPTextField otpField(BuildContext context) {
+    return OTPTextField(
+      length: 6,
+      otpFieldStyle: OtpFieldStyle(
+        backgroundColor: Color(0xFF1D1D1D),
+        borderColor: Colors.white,
+      ),
+      width: MediaQuery.of(context).size.width - 34,
+      fieldWidth: 58,
+      style: TextStyle(
+        fontSize: 17,
+        color: Colors.white,
+      ),
+      textFieldAlignment: MainAxisAlignment.spaceAround,
+      fieldStyle: FieldStyle.underline,
+      onChanged: (text) {
+        print("Pin: $text");
+      },
+      onCompleted: (pin) {
+        print("Completed: $pin");
+      },
+    );
+  }
+
   Container TextfieldContainer(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width - 40,
@@ -183,7 +209,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
             padding:
                 const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8.0),
             child: Text(
-              "+91",
+              "+90",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 17.0,
@@ -200,7 +226,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                       buttonName = "Reset";
                     });
                     await auth.verifyPhoneNumber(
-                        "+91 ${phoneTextControl.text}", context,setData);
+                        "+90 ${phoneTextControl.text}", context, setData);
                   },
             child: Padding(
               padding:
@@ -218,37 +244,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
           border: OutlineInputBorder(),
         ),
       ),
-    );
-  }
-}
-
-class OtpField extends StatelessWidget {
-  const OtpField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return OTPTextField(
-      length: 6,
-      otpFieldStyle: OtpFieldStyle(
-        backgroundColor: Color(0xFF1D1D1D),
-        borderColor: Colors.white,
-      ),
-      width: MediaQuery.of(context).size.width - 34,
-      fieldWidth: 58,
-      style: TextStyle(
-        fontSize: 17,
-        color: Colors.white,
-      ),
-      textFieldAlignment: MainAxisAlignment.spaceAround,
-      fieldStyle: FieldStyle.underline,
-      onChanged: (text) {
-        print("Pin: $text");
-      },
-      onCompleted: (pin) {
-        print("Completed: $pin");
-      },
     );
   }
 }

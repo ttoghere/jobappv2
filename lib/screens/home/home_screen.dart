@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobappv2/screens/auth_service.dart';
+import 'package:jobappv2/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/hs";

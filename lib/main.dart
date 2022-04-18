@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:jobappv2/screens/auth_service.dart';
+import 'package:jobappv2/auth_service.dart';
 import 'package:jobappv2/screens/home/home_screen.dart';
 import 'package:jobappv2/screens/login/login_screen.dart';
 import 'package:jobappv2/screens/phone/phone_auth.dart';
