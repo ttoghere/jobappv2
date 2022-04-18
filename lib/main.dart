@@ -4,6 +4,7 @@ import 'package:jobappv2/auth_service.dart';
 import 'package:jobappv2/screens/home/home_screen.dart';
 import 'package:jobappv2/screens/login/login_screen.dart';
 import 'package:jobappv2/screens/phone/phone_auth.dart';
+import 'package:jobappv2/screens/todo/todo_screen.dart';
 
 import 'firebase_options.dart';
 import 'screens/sign_up/sign_up_screen.dart';
@@ -50,8 +51,9 @@ class _MyAppState extends State<MyApp> {
         LoginScreen.routeName: (context) => LoginScreen(),
         SignUp.routeName: (context) => SignUp(),
         PhoneAuthScreen.routeName: (context) => PhoneAuthScreen(),
+        TodoScreen.routeName:(context) => TodoScreen(),
       },
-      home: currentPage,
+      home: TodoScreen(),
     );
   }
 }
