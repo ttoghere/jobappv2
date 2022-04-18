@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -11,6 +13,25 @@ class PhoneAuthScreen extends StatefulWidget {
 }
 
 class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
+  int start = 30;
+  bool wait = false;
+  String buttonName = "Send";
+  void startTimer() {
+    const onsec = Duration(seconds: 1);
+    Timer timer = Timer.periodic(onsec, (timer) {
+      if (start == 0) {
+        setState(() {
+          timer.cancel();
+          wait = false;
+        });
+      } else {
+        setState(() {
+          start--;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,13 +53,154 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
               SizedBox(
                 height: 40,
               ),
-              TextFieldContainer(),
+              TextfieldContainer(context),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 12,
+                        ),
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      "Enter 6 Digit Otp",
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 12,
+                        ),
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 30,
               ),
               OtpField(),
+              SizedBox(
+                height: 30,
+              ),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Send OTP again in",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.yellowAccent,
+                      ),
+                    ),
+                    TextSpan(
+                      text: " 00:$start",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.red[900],
+                      ),
+                    ),
+                    TextSpan(
+                      text: " sec ",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.yellowAccent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width - 60,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFF9601),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    "Lets GO",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color(0xFFFBE2AE),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Container TextfieldContainer(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width - 40,
+      height: 60,
+      decoration: BoxDecoration(
+        color: Color(0xFF1D1D1D),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: TextFormField(
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        decoration: InputDecoration(
+          hintText: "Enter Your Phone Number",
+          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 19),
+          fillColor: Colors.white,
+          prefixIcon: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8.0),
+            child: Text(
+              "+91",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 17.0,
+              ),
+            ),
+          ),
+          suffixIcon: GestureDetector(
+            onTap: wait
+                ? null
+                : () {
+                    startTimer();
+                    setState(() {
+                      wait = true;
+                      buttonName = "Reset";
+                    });
+                  },
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8.0),
+              child: Text(
+                buttonName,
+                style: TextStyle(
+                  color: wait ? Colors.grey : Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17.0,
+                ),
+              ),
+            ),
+          ),
+          border: OutlineInputBorder(),
         ),
       ),
     );
@@ -66,58 +228,12 @@ class OtpField extends StatelessWidget {
       ),
       textFieldAlignment: MainAxisAlignment.spaceAround,
       fieldStyle: FieldStyle.underline,
-      onCompleted: (pin) {
-        print("Compleated: $pin");
+      onChanged: (text) {
+        print("Pin: $text");
       },
-    );
-  }
-}
-
-class TextFieldContainer extends StatelessWidget {
-  const TextFieldContainer({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width - 40,
-      height: 60,
-      decoration: BoxDecoration(
-        color: Color(0xFF1D1D1D),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: "Enter Your Phone Number",
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 19),
-          fillColor: Colors.white,
-          prefixIcon: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8.0),
-            child: Text(
-              "+91",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 17.0,
-              ),
-            ),
-          ),
-          suffixIcon: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 19.0, horizontal: 8.0),
-            child: Text(
-              "Send",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 17.0,
-              ),
-            ),
-          ),
-          border: OutlineInputBorder(),
-        ),
-      ),
+      onCompleted: (pin) {
+        print("Completed: $pin");
+      },
     );
   }
 }
