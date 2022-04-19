@@ -77,17 +77,35 @@ class _EditTodosState extends State<EditTodos> {
                       size: 28,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        edit = !edit;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      color: edit ? Colors.red : Colors.white,
-                      size: 28,
-                    ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            edit = !edit;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.edit,
+                          color: edit ? Colors.red : Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection("Todo")
+                              .doc(widget.id)
+                              .delete()
+                              .then((value) => Navigator.of(context).pop());
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

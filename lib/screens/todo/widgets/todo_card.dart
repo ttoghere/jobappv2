@@ -7,8 +7,12 @@ class TodoCard extends StatelessWidget {
   final String time;
   final bool check;
   final Color iconBgColor;
-  const TodoCard({
+  final Function onChange;
+  final int index;
+  TodoCard({
     Key? key,
+    required this.index,
+    required this.onChange,
     required this.title,
     required this.iconData,
     required this.iconColor,
@@ -36,7 +40,9 @@ class TodoCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  onChange(index);
+                },
                 value: check,
               ),
             ),
