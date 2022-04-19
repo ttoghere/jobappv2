@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:jobappv2/auth_service.dart';
+import 'package:jobappv2/screens/todo/todo_screen.dart';
 import 'package:jobappv2/screens/todo/widgets/todo_card.dart';
+import 'package:jobappv2/screens/todo/widgets/todo_edit.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/hs";
@@ -24,12 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               onPressed: () => authServiceClass.logOut(context),
               icon: Icon(Icons.logout),
-            ),
-            CircleAvatar(
-              child: FittedBox(child: Text("Profile Photo")),
-            ),
-            SizedBox(
-              width: 25,
             ),
           ],
           title: Text(
@@ -81,10 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     colors: [Colors.red[900]!, Colors.yellow[900]!],
                   ),
                 ),
-                child: Icon(
-                  Icons.add,
-                  size: 32,
-                  color: Colors.white,
+                child: IconButton(
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(TodoScreen.routeName),
+                  icon: Icon(
+                    Icons.add,
+                    size: 32,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               label: "",
@@ -135,15 +135,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     iconData = Icons.run_circle_outlined;
                     iconColor = Colors.red[900]!;
                 }
-                return TodoCard(
-                  title: document["title"] == null
-                      ? "Hey There"
-                      : document["title"],
-                  iconData: iconData,
-                  iconColor: iconColor,
-                  time: "10 PM",
-                  check: true,
-                  iconBgColor: Colors.red[200]!,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditTodos(
+                              document: document,
+                              id: snapshot.data!.docs[index].id,
+                            )));
+                  },
+                  child: TodoCard(
+                    title: document["title"] == null
+                        ? "Hey There"
+                        : document["title"],
+                    iconData: iconData,
+                    iconColor: iconColor,
+                    time: "10 PM",
+                    check: true,
+                    iconBgColor: Colors.red[200]!,
+                  ),
                 );
               },
             );
