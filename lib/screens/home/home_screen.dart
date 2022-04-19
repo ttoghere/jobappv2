@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //Kullanılacak olan sınıfın nesnesini oluşturur
   AuthServiceClass authServiceClass = AuthServiceClass();
   //Veri akışının tip ile belirtilmesi ardından
   //Kullanılacak olan verilerin kapı yolunu sağlar

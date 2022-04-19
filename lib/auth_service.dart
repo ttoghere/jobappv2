@@ -15,7 +15,7 @@ class AuthServiceClass {
     await storage.write(
         key: "userCredential", value: userCredential.toString());
   }
-  //Token içeriğinin aktarımını sağlar
+  //Token içeriğinin gösterimini sağlar
   Future<String?> getToken() async {
     return await storage.read(key: "token");
   }
