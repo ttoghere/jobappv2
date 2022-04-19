@@ -1,3 +1,4 @@
+import 'package:battery_plus/battery_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
@@ -29,10 +30,11 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  var status;
+  var status = true;
   var connectivity;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -45,14 +47,15 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
+  var battery = Battery();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
-        child: !status
-            ? CircularProgressIndicator()
-            : Container(
+        child: status ?? true
+            ? Container(
                 height: size.height,
                 width: size.width,
                 decoration: BoxDecoration(
@@ -74,6 +77,15 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    StreamBuilder<BatteryState>(
+                        stream: battery.onBatteryStateChanged,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text("Please Charge your phone");
+                          } else {
+                            return Text(snapshot.data!.name);
+                          }
+                        }),
                     Text(
                       "Sign Up",
                       style: TextStyle(
@@ -170,7 +182,8 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-              ),
+              )
+            : CircularProgressIndicator(),
       ),
     );
   }

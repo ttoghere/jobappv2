@@ -5,6 +5,7 @@
 import FlutterMacOS
 import Foundation
 
+import battery_plus_macos
 import cloud_firestore
 import connectivity_plus_macos
 import firebase_auth
@@ -13,6 +14,7 @@ import firebase_storage
 import flutter_secure_storage_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
+  BatteryPlusMacosPlugin.register(with: registry.registrar(forPlugin: "BatteryPlusMacosPlugin"))
   FLTFirebaseFirestorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseFirestorePlugin"))
   ConnectivityPlugin.register(with: registry.registrar(forPlugin: "ConnectivityPlugin"))
   FLTFirebaseAuthPlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseAuthPlugin"))
