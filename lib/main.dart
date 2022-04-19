@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    authServiceClass.signOut(context);
     checkLogin();
   }
 
@@ -46,14 +47,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         SignUp.routeName: (context) => SignUp(),
         PhoneAuthScreen.routeName: (context) => PhoneAuthScreen(),
-        TodoScreen.routeName:(context) => TodoScreen(),
+        TodoScreen.routeName: (context) => TodoScreen(),
       },
-      home: TodoScreen(),
+      home: SignUp(),
     );
   }
 }

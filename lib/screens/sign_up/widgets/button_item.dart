@@ -23,13 +23,15 @@ class ButtonItem extends StatelessWidget {
         width: size.width - 60,
         height: 60,
         child: Card(
+          color: Colors.white,
           elevation: 8,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-              side: BorderSide(
-                color: Colors.grey[900]!,
-                width: 1,
-              )),
+            borderRadius: BorderRadius.circular(15),
+            side: BorderSide(
+              color: Colors.grey[200]!,
+              width: 1,
+            ),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

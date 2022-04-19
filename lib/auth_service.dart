@@ -25,6 +25,16 @@ class AuthServiceClass {
     } catch (e) {}
   }
 
+  Future<void> signOut(BuildContext context) async {
+    try {
+      await auth.signOut();
+      await storage.delete(key: "token");
+    } catch (e) {
+      final snackBar = SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
   Future<void> verifyPhoneNumber(
       String phoneNumber, BuildContext context, Function setData) async {
     PhoneVerificationCompleted verificationCompleted =
@@ -35,7 +45,8 @@ class AuthServiceClass {
         (FirebaseAuthException exception) {
       showSnackbar(context, "Verification Failed: $exception");
     };
-    PhoneCodeSent codeSent = (String verificationId, [int? forceResendingToken]) {
+    PhoneCodeSent codeSent =
+        (String verificationId, [int? forceResendingToken]) {
       showSnackbar(context, "Verification code sent to your number");
       setData(verificationId);
     };
