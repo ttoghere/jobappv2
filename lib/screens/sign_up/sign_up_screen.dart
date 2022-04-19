@@ -18,6 +18,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  //Firebase için varsayılan olarak taslak yapıda
+  //Email ve Şifre yardımı ile kullanıcı kayıdı sağlar
   void signUp() async {
     try {
       await firebaseAuth.createUserWithEmailAndPassword(
@@ -38,6 +40,8 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
+    //internet bağlantısını kontrol edecek olan bir dinleyici ardından
+    //Yapılacak olan işlemlerin belirtilmesini sağlar
     connectivity = Connectivity().onConnectivityChanged.listen((event) {
       if (event == ConnectivityResult.mobile) {
         status = true;
@@ -77,6 +81,7 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    //Gelen veri akışında olan aktif değişimleri oluşturur
                     StreamBuilder<BatteryState>(
                         stream: battery.onBatteryStateChanged,
                         builder: (context, snapshot) {

@@ -225,6 +225,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                       wait = true;
                       buttonName = "Reset";
                     });
+                    //Belirtilen cep numarasının doğrulanmasını sağlar
                     await auth.verifyPhoneNumber(
                         "+90 ${phoneTextControl.text}", context, setData);
                   },

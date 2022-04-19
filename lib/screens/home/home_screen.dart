@@ -16,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   AuthServiceClass authServiceClass = AuthServiceClass();
+  //Veri akışının tip ile belirtilmesi ardından
+  //Kullanılacak olan verilerin kapı yolunu sağlar
   final Stream<QuerySnapshot> _stream =
       FirebaseFirestore.instance.collection("Todo").snapshots();
   List<Select> selectedItems = [];
@@ -25,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
+            //Oturum kapatılmasını sağlar
             onPressed: () => authServiceClass.logOut(context),
             icon: Icon(Icons.logout),
           ),
@@ -104,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      //Veri tabanından gelen veri akışı için düzenli otomatik veri oluşumu yapar
       body: StreamBuilder<QuerySnapshot>(
         stream: _stream,
         builder: (context, snapshot) {
@@ -115,10 +119,12 @@ class _HomeScreenState extends State<HomeScreen> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
+              //Kullanılacak olan verilerin işlenip map yapısına dönüşümünü sağlar
               Map<String, dynamic> document =
                   snapshot.data!.docs[index].data() as Map<String, dynamic>;
               IconData iconData;
               Color iconColor;
+              //Parametreden gelen verinin tipine göre belirleme sağlar
               switch (document["Category"]) {
                 case "Work":
                   iconData = Icons.run_circle_outlined;

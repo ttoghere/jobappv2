@@ -152,6 +152,8 @@ class _TodoScreenState extends State<TodoScreen> {
   Widget button() {
     return GestureDetector(
       onTap: () {
+        //Firestore veri tabanına gerekli olan verinin eklenmesini sağlar
+        //Collection parametresi kayıt edilecek olan dökümanı belirtir
         FirebaseFirestore.instance.collection("Todo").add({
           "title": _titleController.text,
           "task": type,

@@ -33,6 +33,7 @@ class _LoginButtonState extends State<LoginButton> {
           circular = true;
         });
         try {
+          //Email ve Şifre yardımı ile oturum açılmasını sağlar
           UserCredential userCredential =
               await firebaseAuth.signInWithEmailAndPassword(
             email: widget.entryEmail.text,

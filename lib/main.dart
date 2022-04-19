@@ -10,8 +10,9 @@ import 'firebase_options.dart';
 import 'screens/sign_up/sign_up_screen.dart';
 
 void main() async {
+  //Gerekli olan Flutter Widgetlarının başlatılmasını sağlar
   WidgetsFlutterBinding.ensureInitialized();
-
+  //Firebase yapısının uygulama içinde aktif başlamasını sağlar
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -33,8 +34,9 @@ class _MyAppState extends State<MyApp> {
     authServiceClass.signOut(context);
     checkLogin();
   }
-
+  //Giriş durumunun token kontrolünü sağlar
   void checkLogin() async {
+    //Eğer token durumu varsa anasayfaya yoksa kayıt sayfasına yönlendirme durumunu sağlar
     String? token = await authServiceClass.getToken();
     if (token != null) {
       setState(() {

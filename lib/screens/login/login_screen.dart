@@ -17,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void LoginScreen() async {
     try {
+      //Belirtilen parametreler yardımı ile üye kayıdı yapılmasını sağlar
       await firebaseAuth.createUserWithEmailAndPassword(
         email: "tuncinyo12@gmail.com",
         password: "121233aa11",

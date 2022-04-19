@@ -93,6 +93,7 @@ class _EditTodosState extends State<EditTodos> {
                       ),
                       IconButton(
                         onPressed: () {
+                          //Verilen id ve döküman seçimi olan verinin silinmesini sağlar
                           FirebaseFirestore.instance
                               .collection("Todo")
                               .doc(widget.id)
@@ -214,6 +215,7 @@ class _EditTodosState extends State<EditTodos> {
   Widget button() {
     return GestureDetector(
       onTap: () {
+        //Belirtilen verinin güncellenmesini sağlar
         FirebaseFirestore.instance.collection("Todo").doc(widget.id).update({
           "title": _titleController.text,
           "task": type,

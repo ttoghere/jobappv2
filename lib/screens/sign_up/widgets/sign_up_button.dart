@@ -30,6 +30,7 @@ class _SignUpButtonState extends State<SignUpButton> {
           circular = true;
         });
         try {
+          //Email ve Şifre ile üye kayıdı yapılmasını sağlar
           UserCredential userCredential =
               await firebaseAuth.createUserWithEmailAndPassword(
             email: widget.entryEmail.text,
