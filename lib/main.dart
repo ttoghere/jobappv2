@@ -40,6 +40,8 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         currentPage = HomeScreen();
       });
+    } else {
+      currentPage = SignUp();
     }
   }
 
@@ -55,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         PhoneAuthScreen.routeName: (context) => PhoneAuthScreen(),
         TodoScreen.routeName: (context) => TodoScreen(),
       },
-      home: HomeScreen(),
+      home: currentPage,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
 import '../../consts.dart';
@@ -28,133 +29,148 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  var status;
+  var connectivity;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    connectivity = Connectivity().onConnectivityChanged.listen((event) {
+      if (event == ConnectivityResult.mobile) {
+        status = true;
+      } else if (event == ConnectivityResult.none) {
+        status = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          height: size.height,
-          width: size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.red[100]!,
-                Colors.red[500]!,
-                Colors.red[900]!,
-                Colors.black,
-              ],
-              stops: [
-                0.0,
-                0.3,
-                0.6,
-                1.0,
-              ],
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Sign Up",
-                style: TextStyle(
-                  fontSize: 35,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+        child: !status
+            ? CircularProgressIndicator()
+            : Container(
+                height: size.height,
+                width: size.width,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.red[100]!,
+                      Colors.red[500]!,
+                      Colors.red[900]!,
+                      Colors.black,
+                    ],
+                    stops: [
+                      0.0,
+                      0.3,
+                      0.6,
+                      1.0,
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              ButtonItem(
-                onPress: () =>
-                    Navigator.of(context).pushNamed(PhoneAuthScreen.routeName),
-                imagePath: "svg/phone.svg",
-                buttonName: "Phone",
-                size: size,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                "Or",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextItem(
-                size: size,
-                labelN: "Email",
-                fieldControl: _emailController,
-                obsecure: false,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextItem(
-                size: size,
-                labelN: "Password",
-                fieldControl: _passwordController,
-                obsecure: true,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              SignUpButton(
-                entryEmail: _emailController,
-                entryPass: _passwordController,
-                size: size,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "If you already have an account?",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        fontSize: 35,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, LoginScreen.routeName);
-                    },
-                    child: Text(
-                      "Login",
+                    SizedBox(
+                      height: 30,
+                    ),
+                    ButtonItem(
+                      onPress: () => Navigator.of(context)
+                          .pushNamed(PhoneAuthScreen.routeName),
+                      imagePath: "svg/phone.svg",
+                      buttonName: "Phone",
+                      size: size,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Or",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    TextItem(
+                      size: size,
+                      labelN: "Email",
+                      fieldControl: _emailController,
+                      obsecure: false,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    TextItem(
+                      size: size,
+                      labelN: "Password",
+                      fieldControl: _passwordController,
+                      obsecure: true,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SignUpButton(
+                      entryEmail: _emailController,
+                      entryPass: _passwordController,
+                      size: size,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "If you already have an account?",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, LoginScreen.routeName);
+                          },
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Forgot Password",
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                "Forgot Password",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
