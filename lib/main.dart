@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         PhoneAuthScreen.routeName: (context) => PhoneAuthScreen(),
         TodoScreen.routeName: (context) => TodoScreen(),
       },
-      home: SignUp(),
+      home: HomeScreen(),
     );
   }
 }

@@ -78,6 +78,7 @@ class TodoCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
+                    Spacer(),
                     Text(
                       time,
                       style: TextStyle(
