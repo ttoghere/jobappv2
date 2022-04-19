@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        body: StreamBuilder(
+        body: StreamBuilder<QuerySnapshot>(
           stream: _stream,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -107,7 +107,46 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-            return Container();
+            return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                Map<String, dynamic> document =
+                    snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                IconData iconData;
+                Color iconColor;
+                switch (document["Category"]) {
+                  case "Work":
+                    iconData = Icons.run_circle_outlined;
+                    iconColor = Colors.white;
+                    break;
+                  case "WorkOut":
+                    iconData = Icons.alarm;
+                    iconColor = Colors.yellow[900]!;
+                    break;
+                  case "Food":
+                    iconData = Icons.local_grocery_store;
+                    iconColor = Colors.blue[900]!;
+                    break;
+                  case "Design":
+                    iconData = Icons.audiotrack_rounded;
+                    iconColor = Colors.pink[900]!;
+                    break;
+                  default:
+                    iconData = Icons.run_circle_outlined;
+                    iconColor = Colors.red[900]!;
+                }
+                return TodoCard(
+                  title: document["title"] == null
+                      ? "Hey There"
+                      : document["title"],
+                  iconData: iconData,
+                  iconColor: iconColor,
+                  time: "10 PM",
+                  check: true,
+                  iconBgColor: Colors.red[200]!,
+                );
+              },
+            );
           },
         ));
   }
